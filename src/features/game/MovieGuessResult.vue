@@ -6,7 +6,7 @@ defineProps<{
 }>();
 </script>
 <template>
-    <div class="flex">
+    <div class="flex" v-once>
         <div>
             {{ result.guessMovie.title }}
         </div>
