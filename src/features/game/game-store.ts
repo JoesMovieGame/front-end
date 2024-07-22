@@ -1,12 +1,12 @@
 import { reactive } from "vue";
 import { defineStore } from "pinia";
 import type { Movie } from "./models/movie";
-import { type GuessResult, GuessResultClass } from "./models/guess-result";
+import { type IGuessResult, GuessResult } from "./models/guess-result";
 
 export const useGameStore = defineStore("game", () => {
   let answerMovie: Movie | null = null;
 
-  const guessResults = reactive<GuessResult[]>([]);
+  const guessResults = reactive<IGuessResult[]>([]);
 
   async function initailizeGame() {
     // fetch current game answer movie data from API
@@ -44,7 +44,7 @@ export const useGameStore = defineStore("game", () => {
     };
 
     // add guess movie to the list
-    guessResults.push(new GuessResultClass(guessMovie, answerMovie));
+    guessResults.push(new GuessResult(guessMovie, answerMovie));
   }
 
   return { answerMovie, guessResults, initailizeGame, guessMovie };

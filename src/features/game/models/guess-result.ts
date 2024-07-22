@@ -1,7 +1,7 @@
 import type { Movie, ProductionCompany, CastMember, Director } from "./movie";
 
-export interface GuessResult {
-    readonly guessMovie: Movie;
+export interface IGuessResult {
+  readonly guessMovie: Movie;
   readonly isCorrect: boolean;
 
   readonly isSameReleaseYear: boolean;
@@ -20,7 +20,7 @@ export interface GuessResult {
   readonly matchingCastMembers: CastMember[];
 }
 
-export class GuessResultClass implements GuessResult {
+export class GuessResult implements IGuessResult {
   readonly guessMovie: Movie;
   readonly answerMovie: Movie;
 

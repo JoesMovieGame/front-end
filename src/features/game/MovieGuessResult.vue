@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { GuessResult } from './models/guess-result';
+import type { IGuessResult } from './models/guess-result';
 
 defineProps<{
-    result: GuessResult;
+    result: IGuessResult;
 }>();
 </script>
 <template>
