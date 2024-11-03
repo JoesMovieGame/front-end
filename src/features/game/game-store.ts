@@ -1,4 +1,4 @@
-import { reactive } from "vue";
+import { computed, reactive } from "vue";
 import { defineStore } from "pinia";
 import type { Movie } from "./models/movie";
 import { type IGuessResult, GuessResult } from "./models/guess-result";
@@ -7,6 +7,7 @@ export const useGameStore = defineStore("game", () => {
   let answerMovie: Movie | null = null;
 
   const guessResults = reactive<IGuessResult[]>([]);
+  const gameWon = computed(() => guessResults.some((result) => result.isCorrect));
 
   async function initailizeGame() {
     // fetch current game answer movie data from API
@@ -26,7 +27,7 @@ export const useGameStore = defineStore("game", () => {
   }
 
   async function guessMovie(movieId: number) {
-    if (!answerMovie) return;
+    if (!answerMovie || gameWon.value) return;
 
     // fetch guess movie data from API
     const guessMovie: Movie = {
