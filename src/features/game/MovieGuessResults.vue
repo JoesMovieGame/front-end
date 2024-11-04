@@ -5,7 +5,7 @@ import MovieGuessResult from "./MovieGuessResult.vue";
 const gameStore = useGameStore();
 </script>
 <template>
-  <div>
+  <div v-if="gameStore.guessResults.length">
     <template
       v-for="result in gameStore.guessResults"
       :key="result.guessMovie.id"

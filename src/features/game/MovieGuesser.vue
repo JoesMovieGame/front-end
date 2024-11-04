@@ -25,6 +25,8 @@ async function guessMovie() {
 }
 </script>
 <template>
-  <movie-search v-model="selectedMovieId" />
-  <button @click="guessMovie">Guess</button>
+  <div class="flex justify-between items-center p-4">
+    <movie-search />
+    <button @click="guessMovie">Guess</button>
+  </div>
 </template>
