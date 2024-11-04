@@ -33,10 +33,15 @@ function clearSelectedMovie() {
   selectedSearchResult.value = null;
 }
 
+const emit = defineEmits<{
+  (e: 'movieSelected', movieId: number): void;
+}>();
+
 function selectMovie(movie: MovieSearchResult) {
   selectedSearchResult.value = movie;
   search.value = "";
   searchVisible.value = false;
+  emit("movieSelected", movie.id);
 }
 
 function getMovieSearchResultDisplay(movie: MovieSearchResult) {

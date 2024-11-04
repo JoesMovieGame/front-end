@@ -7,6 +7,10 @@ const selectedMovieId = ref<number | null>(1);
 
 const gameStore = useGameStore();
 
+function movieSelected(movieId: number) {
+  selectedMovieId.value = movieId;
+}
+
 async function guessMovie() {
   if (selectedMovieId.value === null) {
     return;
@@ -24,9 +28,10 @@ async function guessMovie() {
   await gameStore.guessMovie(selectedMovieId.value);
 }
 </script>
+
 <template>
   <div class="flex justify-between items-center p-4">
-    <movie-search />
+    <movie-search @movie-selected="movieSelected" />
     <button @click="guessMovie">Guess</button>
   </div>
 </template>
