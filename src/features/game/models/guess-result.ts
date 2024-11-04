@@ -1,22 +1,27 @@
 import type { Movie, ProductionCompany, CastMember, Director } from "./movie";
 
+export enum GuessResultMatchLevel {
+  None,
+  Partial,
+  Full
+}
+
 export interface IGuessResult {
   readonly guessMovie: Movie;
   readonly isCorrect: boolean;
 
-  readonly isSameReleaseYear: boolean;
-  readonly isSameReleaseDecade: boolean;
+  readonly releaseYearMatchLevel: GuessResultMatchLevel;
 
-  readonly isSameGenres: boolean;
+  readonly genreMatchLevel: GuessResultMatchLevel;
   readonly matchingGenres: string[];
 
-  readonly isSameProductionCompanies: boolean;
+  readonly productionCompanyMatchLevel: GuessResultMatchLevel;
   readonly matchingProductionCompanies: ProductionCompany[];
 
-  readonly isSameDirectors: boolean;
+  readonly directorsMatchLevel: GuessResultMatchLevel;
   readonly matchingDirectors: Director[];
 
-  readonly isSameCast: boolean;
+  readonly castMatchLevel: GuessResultMatchLevel;
   readonly matchingCastMembers: CastMember[];
 }
 
@@ -26,19 +31,18 @@ export class GuessResult implements IGuessResult {
 
   readonly isCorrect: boolean;
 
-  readonly isSameReleaseYear: boolean;
-  readonly isSameReleaseDecade: boolean;
+  readonly releaseYearMatchLevel: GuessResultMatchLevel;
 
-  readonly isSameGenres: boolean;
+  readonly genreMatchLevel: GuessResultMatchLevel;
   readonly matchingGenres: string[];
 
-  readonly isSameProductionCompanies: boolean;
+  readonly productionCompanyMatchLevel: GuessResultMatchLevel;
   readonly matchingProductionCompanies: ProductionCompany[];
 
-  readonly isSameDirectors: boolean;
+  readonly directorsMatchLevel: GuessResultMatchLevel;
   readonly matchingDirectors: Director[];
 
-  readonly isSameCast: boolean;
+  readonly castMatchLevel: GuessResultMatchLevel;
   readonly matchingCastMembers: CastMember[];
 
   constructor(guessMovie: Movie, answerMovie: Movie) {
@@ -47,38 +51,35 @@ export class GuessResult implements IGuessResult {
 
     this.isCorrect = this.getIsCorrect();
 
-    this.isSameReleaseYear = this.getIsSameReleaseYear();
-    this.isSameReleaseDecade = this.getIsSameReleaseDecade();
+    this.releaseYearMatchLevel = this.getReleaseYearMatchLevel();
 
     this.matchingGenres = this.getMatchingGenres();
-    this.isSameGenres = this.getIsSameGenres();
+    this.genreMatchLevel = this.getGenreMatchLevel();
 
     this.matchingProductionCompanies = this.getMatchingProductionCompanies();
-    this.isSameProductionCompanies = this.getIsSameProductionCompanies();
+    this.productionCompanyMatchLevel = this.getProductionCompaniesMatchLevel();
 
     this.matchingDirectors = this.getMatchingDirectors();
-    this.isSameDirectors = this.getIsSameDirectors();
+    this.directorsMatchLevel = this.getDirectorsMatchLevel();
 
     this.matchingCastMembers = this.getMatchingCastMembers();
-    this.isSameCast = this.getIsSameCasts();
+    this.castMatchLevel = this.getCastsMatchLevel();
   }
 
   private getIsCorrect() {
     return this.guessMovie.id === this.answerMovie.id;
   }
 
-  private getIsSameReleaseYear() {
-    return (
-      this.guessMovie.releaseDate.getFullYear() ===
-      this.answerMovie.releaseDate.getFullYear()
-    );
-  }
+  private getReleaseYearMatchLevel() {
+    if (this.isCorrect) return GuessResultMatchLevel.Full;
 
-  private getIsSameReleaseDecade() {
-    return (
-      Math.floor(this.guessMovie.releaseDate.getFullYear() / 10) ===
-      Math.floor(this.answerMovie.releaseDate.getFullYear() / 10)
-    );
+    if (this.guessMovie.releaseDate.getFullYear() === this.answerMovie.releaseDate.getFullYear())
+      return GuessResultMatchLevel.Full;
+    
+    if (Math.abs(this.guessMovie.releaseDate.getFullYear() - this.answerMovie.releaseDate.getFullYear()) <= 10)
+      return GuessResultMatchLevel.Partial;
+    
+    return GuessResultMatchLevel.None;
   }
 
   private getMatchingGenres() {
@@ -87,8 +88,15 @@ export class GuessResult implements IGuessResult {
     });
   }
 
-  private getIsSameGenres() {
-    return this.getMatchingGenres.length === this.answerMovie.genres.length;
+  private getGenreMatchLevel() {
+    if (this.isCorrect) return GuessResultMatchLevel.Full;
+
+    if (this.guessMovie.genres.length === this.answerMovie.genres.length
+      && this.matchingGenres.length === this.guessMovie.genres.length)
+      return GuessResultMatchLevel.Full;
+    if (this.matchingGenres.length > 0)
+      return GuessResultMatchLevel.Partial;
+    return GuessResultMatchLevel.None;
   }
 
   private getMatchingProductionCompanies() {
@@ -99,11 +107,15 @@ export class GuessResult implements IGuessResult {
     });
   }
 
-  private getIsSameProductionCompanies() {
-    return (
-      this.getMatchingProductionCompanies.length ===
-      this.answerMovie.productionCompanies.length
-    );
+  private getProductionCompaniesMatchLevel() {
+    if (this.isCorrect) return GuessResultMatchLevel.Full;
+
+    if (this.guessMovie.productionCompanies.length === this.answerMovie.productionCompanies.length
+      && this.matchingProductionCompanies.length === this.guessMovie.productionCompanies.length)
+      return GuessResultMatchLevel.Full;
+    if (this.matchingProductionCompanies.length > 0)
+      return GuessResultMatchLevel.Partial;
+    return GuessResultMatchLevel.None;
   }
 
   private getMatchingDirectors() {
@@ -114,8 +126,15 @@ export class GuessResult implements IGuessResult {
     });
   }
 
-  private getIsSameDirectors() {
-    return this.matchingDirectors.length === this.answerMovie.directors.length;
+  private getDirectorsMatchLevel() {
+    if (this.isCorrect) return GuessResultMatchLevel.Full;
+
+    if (this.guessMovie.directors.length === this.answerMovie.directors.length
+      && this.matchingDirectors.length === this.guessMovie.directors.length)
+      return GuessResultMatchLevel.Full;
+    if (this.matchingDirectors.length > 0)
+      return GuessResultMatchLevel.Partial;
+    return GuessResultMatchLevel.None;
   }
 
   private getMatchingCastMembers() {
@@ -126,7 +145,14 @@ export class GuessResult implements IGuessResult {
     });
   }
 
-  private getIsSameCasts() {
-    return this.matchingCastMembers.length === this.answerMovie.cast.length;
+  private getCastsMatchLevel() {
+    if (this.isCorrect) return GuessResultMatchLevel.Full;
+
+    if (this.guessMovie.cast.length === this.answerMovie.cast.length
+      && this.matchingCastMembers.length === this.guessMovie.cast.length)
+      return GuessResultMatchLevel.Full;
+    if (this.matchingCastMembers.length > 0)
+      return GuessResultMatchLevel.Partial;
+    return GuessResultMatchLevel.None;
   }
 }

@@ -35,7 +35,7 @@ export const useGameStore = defineStore("game", () => {
       title: "Guess Movie",
       releaseDate: new Date("2024-01-01"),
       genres: ["Action", "Adventure"],
-      productionCompanies: [{id: 2, name: "Guess Productions"}],
+      productionCompanies: [{id: 2, name: "Guess Productions"}, {id: 1, name: "Joe Productions"}],
       directors: [{id: 1, name: "Joe Doe"}],
       cast: [
         { id: 1, name: "John Doe" },

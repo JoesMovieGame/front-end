@@ -30,7 +30,7 @@ async function guessMovie() {
 </script>
 
 <template>
-  <div class="flex justify-between items-center p-4">
+  <div class="flex justify-center items-center p-4">
     <movie-search @movie-selected="movieSelected" />
     <button @click="guessMovie">Guess</button>
   </div>
