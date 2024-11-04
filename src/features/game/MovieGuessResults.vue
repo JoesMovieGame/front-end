@@ -10,7 +10,7 @@ const gameStore = useGameStore();
       v-for="result in gameStore.guessResults"
       :key="result.guessMovie.id"
     >
-      <movie-guess-result :result="result" />
+      <movie-guess-result :result="result" class="mb-1"/>
     </template>
   </div>
 </template>

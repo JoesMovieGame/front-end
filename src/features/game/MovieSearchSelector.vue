@@ -9,6 +9,15 @@ interface MovieSearchResult {
   year: number;
 }
 
+
+const emit = defineEmits<{
+  (e: 'movieSelected', movieId: number | null): void;
+}>();
+
+defineExpose({
+  clearSelectedMovie
+});
+
 const selectedSearchResult = ref<MovieSearchResult | null>(null);
 
 const search = ref("");
@@ -31,11 +40,8 @@ watch(search, debounce(searchMovies, 300));
 
 function clearSelectedMovie() {
   selectedSearchResult.value = null;
+  emit("movieSelected", null);
 }
-
-const emit = defineEmits<{
-  (e: 'movieSelected', movieId: number): void;
-}>();
 
 function selectMovie(movie: MovieSearchResult) {
   selectedSearchResult.value = movie;

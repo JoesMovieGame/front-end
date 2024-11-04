@@ -3,11 +3,11 @@ import { ref } from "vue";
 import { useGameStore } from "./game-store";
 import MovieSearch from "./MovieSearchSelector.vue";
 
-const selectedMovieId = ref<number | null>(1);
-
+const selectedMovieId = ref<number | null>(null);
 const gameStore = useGameStore();
+const movieSearch = ref<InstanceType<typeof MovieSearch>>();
 
-function movieSelected(movieId: number) {
+function movieSelected(movieId: number | null) {
   selectedMovieId.value = movieId;
 }
 
@@ -22,16 +22,19 @@ async function guessMovie() {
     )
   ) {
     // TODO show error
-    return;
+    movieSearch.value?.clearSelectedMovie();
+  }
+  else {
+    await gameStore.guessMovie(selectedMovieId.value);
   }
 
-  await gameStore.guessMovie(selectedMovieId.value);
+  movieSearch.value?.clearSelectedMovie();
 }
 </script>
 
 <template>
   <div class="flex justify-center items-center p-4">
-    <movie-search @movie-selected="movieSelected" />
-    <button @click="guessMovie">Guess</button>
+    <movie-search ref="movieSearch" @movie-selected="movieSelected" />
+    <button :disabled="!selectedMovieId" @click="guessMovie">Guess</button>
   </div>
 </template>
