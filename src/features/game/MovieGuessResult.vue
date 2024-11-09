@@ -13,40 +13,36 @@ defineProps<{
 <template>
   <div>
     <span>{{ result.guessMovie.title }}</span>
-    <div class="flex space-x-1">
+    <div class="grid grid-cols-5 gap-1">
       <movie-guess-result-item :matchLevel="result.releaseYearMatchLevel">
-        <div class="text-center">
-          {{ result.guessMovie.releaseDate.getFullYear().toString() }}
-        </div>
+        {{ result.guessMovie.releaseDate.getFullYear().toString() }}
       </movie-guess-result-item>
       <movie-guess-result-item :matchLevel="result.productionCompanyMatchLevel">
-        <ul class="text-sm">
+        <ul>
           <li
             v-for="productionCompany in result.guessMovie.productionCompanies"
             :key="productionCompany.id"
+            :class="{
+              'font-bold': result.matchingProductionCompanies.some(
+                (c) => c.id == productionCompany.id
+              ),
+            }"
           >
-            <span
-              :class="
-                result.matchingProductionCompanies.some(
-                  (c) => c.id == productionCompany.id
-                )
-                  ? 'font-bold'
-                  : ''
-              "
-              >{{ productionCompany.name }}</span
-            >
+            {{ productionCompany.name }}
+            <span></span>
           </li>
         </ul>
       </movie-guess-result-item>
       <movie-guess-result-item :matchLevel="result.genreMatchLevel">
         <ul>
-          <li v-for="genre in result.guessMovie.genres" :key="genre">
-            <span
-              :class="
-                result.matchingGenres.some((g) => g == genre) ? 'font-bold' : ''
-              "
-              >{{ genre }}</span
-            >
+          <li
+            v-for="genre in result.guessMovie.genres"
+            :key="genre"
+            :class="{
+              'font-bold': result.matchingGenres.some((g) => g == genre),
+            }"
+          >
+            {{ genre }}
           </li>
         </ul>
       </movie-guess-result-item>
@@ -55,15 +51,13 @@ defineProps<{
           <li
             v-for="director in result.guessMovie.directors"
             :key="director.id"
+            :class="{
+              'font-bold': result.matchingDirectors.some(
+                (d) => d.id == director.id
+              ),
+            }"
           >
-            <span
-              :class="
-                result.matchingDirectors.some((d) => d.id == director.id)
-                  ? 'font-bold'
-                  : ''
-              "
-              >{{ director.name }}</span
-            >
+          {{ director.name }}
           </li>
         </ul>
       </movie-guess-result-item>

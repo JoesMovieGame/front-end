@@ -15,10 +15,11 @@ function getBgClass() {
       return "bg-matchNone";
   }
 }
+
 </script>
 
 <template>
-  <div class="flex flex-1 p-4 rounded-lg justify-center items-center text-white" :class="getBgClass()">
+  <div class="flex flex-col h-full aspect-square p-2 rounded-lg justify-center items-center text-white" :class="getBgClass()">
     <slot></slot>
   </div>
 </template>

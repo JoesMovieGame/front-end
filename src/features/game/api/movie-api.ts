@@ -12,6 +12,8 @@ const mockMovies: Movie[] = [
             { id: 1, name: 'Leonardo DiCaprio' },
             { id: 2, name: 'Joseph Gordon-Levitt' },
             { id: 3, name: 'Tom Hardy' },
+            { id: 22, name: 'Ellen Page' },
+            { id: 23, name: 'Ken Watanabe' },
         ],
     },
     {
@@ -24,6 +26,9 @@ const mockMovies: Movie[] = [
         cast: [
             { id: 4, name: 'Keanu Reeves' },
             { id: 5, name: 'Laurence Fishburne' },
+            { id: 24, name: 'Carrie-Anne Moss' },
+            { id: 25, name: 'Hugo Weaving' },
+            { id: 26, name: 'Joe Pantoliano' },
         ],
     },
     {
@@ -36,7 +41,9 @@ const mockMovies: Movie[] = [
         cast: [
             { id: 6, name: 'Matthew McConaughey' },
             { id: 7, name: 'Anne Hathaway' },
-            { id: 3, name: 'Tom Hardy' }, // Overlap with Inception
+            { id: 3, name: 'Tom Hardy' },
+            { id: 27, name: 'Jessica Chastain' },
+            { id: 28, name: 'Michael Caine' },
         ],
     },
     {
@@ -49,7 +56,9 @@ const mockMovies: Movie[] = [
         cast: [
             { id: 8, name: 'Christian Bale' },
             { id: 9, name: 'Heath Ledger' },
-            { id: 3, name: 'Tom Hardy' }, // Overlap with Inception and Interstellar
+            { id: 29, name: 'Aaron Eckhart' },
+            { id: 30, name: 'Michael Caine' },
+            { id: 31, name: 'Maggie Gyllenhaal' },
         ],
     },
     {
@@ -62,6 +71,9 @@ const mockMovies: Movie[] = [
         cast: [
             { id: 10, name: 'John Travolta' },
             { id: 11, name: 'Uma Thurman' },
+            { id: 32, name: 'Samuel L. Jackson' },
+            { id: 33, name: 'Bruce Willis' },
+            { id: 34, name: 'Ving Rhames' },
         ],
     },
     {
@@ -74,6 +86,9 @@ const mockMovies: Movie[] = [
         cast: [
             { id: 12, name: 'Brad Pitt' },
             { id: 13, name: 'Edward Norton' },
+            { id: 35, name: 'Helena Bonham Carter' },
+            { id: 36, name: 'Meat Loaf' },
+            { id: 37, name: 'Jared Leto' },
         ],
     },
     {
@@ -86,6 +101,9 @@ const mockMovies: Movie[] = [
         cast: [
             { id: 14, name: 'Tom Hanks' },
             { id: 15, name: 'Robin Wright' },
+            { id: 38, name: 'Gary Sinise' },
+            { id: 39, name: 'Mykelti Williamson' },
+            { id: 40, name: 'Sally Field' },
         ],
     },
     {
@@ -98,6 +116,9 @@ const mockMovies: Movie[] = [
         cast: [
             { id: 16, name: 'Tim Robbins' },
             { id: 17, name: 'Morgan Freeman' },
+            { id: 41, name: 'Bob Gunton' },
+            { id: 42, name: 'William Sadler' },
+            { id: 43, name: 'Clancy Brown' },
         ],
     },
     {
@@ -110,6 +131,9 @@ const mockMovies: Movie[] = [
         cast: [
             { id: 18, name: 'Marlon Brando' },
             { id: 19, name: 'Al Pacino' },
+            { id: 44, name: 'James Caan' },
+            { id: 45, name: 'Richard S. Castellano' },
+            { id: 46, name: 'Robert Duvall' },
         ],
     },
     {
@@ -122,6 +146,9 @@ const mockMovies: Movie[] = [
         cast: [
             { id: 20, name: 'Elijah Wood' },
             { id: 21, name: 'Ian McKellen' },
+            { id: 47, name: 'Viggo Mortensen' },
+            { id: 48, name: 'Sean Astin' },
+            { id: 49, name: 'Orlando Bloom' },
         ],
     },
 ];

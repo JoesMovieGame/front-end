@@ -7,6 +7,10 @@ const selectedMovieId = ref<number | null>(null);
 const gameStore = useGameStore();
 const movieSearch = ref<InstanceType<typeof MovieSearch>>();
 
+const emit = defineEmits<{
+  (e: 'movieGuessed', movieId: number): void;
+}>();
+
 function movieSelected(movieId: number | null) {
   selectedMovieId.value = movieId;
 }
@@ -29,6 +33,7 @@ async function guessMovie() {
   }
 
   movieSearch.value?.clearSelectedMovie();
+  emit("movieGuessed", selectedMovieId.value);
 }
 </script>
 

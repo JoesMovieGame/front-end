@@ -43,14 +43,12 @@ const displayedCastMembers = computed(() => {
 </script>
 
 <template>
-  <ul class="text-xs">
+  <ul>
     <li
       v-for="castMember in displayedCastMembers"
       :key="castMember.castMember.id"
-    >
-      <span :class="castMember.isMatching ? 'font-bold' : ''">
-        {{ castMember.castMember.name }}
-      </span>
+      :class="{'font-bold': castMember.isMatching}"
+    >{{ castMember.castMember.name }}
     </li>
   </ul>
 </template>
