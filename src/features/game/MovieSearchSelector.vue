@@ -2,13 +2,7 @@
 import { ref, reactive, watch } from "vue";
 import { debounce } from "@/util/debounce";
 import { XMarkIcon } from "@heroicons/vue/24/solid";
-
-interface MovieSearchResult {
-  id: number;
-  title: string;
-  year: number;
-}
-
+import { MockMovieAPI, type MovieSearchResult } from "./api/movie-api";
 
 const emit = defineEmits<{
   (e: 'movieSelected', movieId: number | null): void;
@@ -25,15 +19,12 @@ const searchVisible = ref(false);
 
 const searchResults = reactive<MovieSearchResult[]>([]);
 
-function searchMovies(query: string) {
+async function searchMovies(query: string) {
   searchResults.splice(0);
   if (!query) return;
 
-  searchResults.push(
-    { id: 1, title: "The Matrix", year: 1999 },
-    { id: 2, title: "The Matrix Reloaded", year: 2003 },
-    { id: 3, title: "The Matrix Revolutions", year: 2003 }
-  );
+  const apiResults = await MockMovieAPI.searchMoviesByTitle(query);
+  searchResults.push(...apiResults);
 }
 
 watch(search, debounce(searchMovies, 300));
@@ -51,7 +42,7 @@ function selectMovie(movie: MovieSearchResult) {
 }
 
 function getMovieSearchResultDisplay(movie: MovieSearchResult) {
-  return `${movie.title} (${movie.year})`;
+  return `${movie.title} (${movie.releaseYear})`;
 }
 </script>
 <template>
